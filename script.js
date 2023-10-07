@@ -1,11 +1,21 @@
 document.addEventListener("DOMContentLoaded", function () {
-    let num = 3;
     const taskList = document.getElementById("taskList");
     const newTaskInput = document.getElementById("newTask");
     const addTaskBtn = document.getElementById("addTaskBtn");
 
+    function playCheckedOffSound() {
+        const audio = document.getElementById("checkmarkAudio");
+        audio.play();
+    }
+
     function toggleTaskCompletion(taskDiv) {
-        taskDiv.classList.toggle("completed");
+        const checkbox = taskDiv.querySelector(".task-checkbox");
+        if (checkbox.checked) {
+            taskDiv.classList.add("completed");
+            playCheckedOffSound();
+        } else {
+            taskDiv.classList.remove("completed");
+        }
     }
 
     function taskDeletion(taskDiv) {
@@ -13,10 +23,7 @@ document.addEventListener("DOMContentLoaded", function () {
         deleteButton.className = "btn btn-danger delete-button";
         deleteButton.textContent = "Delete";
         deleteButton.addEventListener("click", function () {
-            taskDiv.remove();
-            if(num > 1){
-                num--;
-            }
+            taskDiv.parentNode.remove();
         });
 
         taskDiv.appendChild(deleteButton);
@@ -25,7 +32,7 @@ document.addEventListener("DOMContentLoaded", function () {
     const defaultTasks = document.querySelectorAll(".task");
 
     defaultTasks.forEach(function (taskDiv) {
-        taskDeletion(taskDiv);
+        taskDeletion(taskDiv.querySelector(".task-controls"));
         taskDiv.addEventListener("click", function () {
             toggleTaskCompletion(taskDiv);
         });
@@ -33,25 +40,29 @@ document.addEventListener("DOMContentLoaded", function () {
 
     addTaskBtn.addEventListener("click", function () {
         const taskText = newTaskInput.value.trim();
+        console.log(taskText);
         if (taskText !== "") {
-            if(num > 1){
-                num = num + 1;
-            }
             const taskDiv = document.createElement("div");
             taskDiv.className = "task";
             taskDiv.innerHTML = `
-                <div class="task-content">
-                    <span class="task-title">Task ${num}:</span>
+
+                <div class="task-text">
+                    <input type="checkbox" class="task-checkbox">
                     <span>${taskText}</span>
                 </div>
+                <div class="task-controls">
+                    <input type="date" class="due-date" placeholder="Due Date">
+                    <input type="color" class="color-code" value="#ffffff">
+                </div>
+
             `;
 
             taskDiv.addEventListener("click", function () {
                 toggleTaskCompletion(taskDiv);
             });
 
-            taskDeletion(taskDiv);
-            console.log(taskList);
+            taskDeletion(taskDiv.querySelector(".task-controls"));
+                    
             taskList.appendChild(taskDiv);
             newTaskInput.value = "";
         }

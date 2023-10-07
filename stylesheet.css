@@ -11,13 +11,19 @@ body {
     border-radius: 5px;
     background-color: #ffffff;
     display: flex;
-    justify-content: space-between;
+    flex-wrap: wrap;
     align-items: center;
 }
 
-.task-title {
-    font-weight: bold;
-    margin-right: 10px; 
+.task-text span{
+    word-break: break-all;
+    margin-left:5px;
+}
+
+.task-controls {
+    margin-left:auto;
+    display: flex;
+    align-items: center;
 }
 
 .delete-button {
@@ -27,29 +33,41 @@ body {
     border-radius: 5px;
     cursor: pointer;
     padding: 5px 10px;
+    margin-left: auto;
 }
 
 .delete-button:hover {
     background-color: #d32f2f; 
 }
 
-.task-title {
-    font-weight: bold;
-}
-
 .add-task {
     margin-top: 20px;
     display: flex;
-    justify-content: space-between;
 }
 
 .task-input {
-    flex-grow: 1;
     margin-right: 10px;
 }
 
 .completed {
     text-decoration: line-through;
     background-color: #f0f0f0;
-    flex-grow: 1; 
 }
+
+.due-date {
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    padding: 5px;
+    margin-left: 10px;
+}
+
+.color-code {
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    margin-left: 10px;
+    margin-right: 10px;
+    padding: 0;
+    width: 30px;
+    height: 30px;
+}
+
